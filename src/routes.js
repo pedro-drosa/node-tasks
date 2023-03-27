@@ -2,13 +2,14 @@ import { ensureValidObject } from "./utils/ensureValidObject.js";
 import { randomUUID } from "node:crypto";
 import { Task } from "./entities/Task.js";
 import { Database } from "./database/Database.js";
+import { buildRoutePath } from "./utils/build-route-path.js";
 
 const database = new Database();
 
 export const routes = [
   {
     method: "POST",
-    path: "/tasks",
+    path: buildRoutePath("/tasks"),
     handler: (request, response) => {
       try {
         const taskSchema = { title: "string", description: "string" };
@@ -22,6 +23,14 @@ export const routes = [
       } catch (error) {
         response.writeHead(400).end(JSON.stringify({ error: error.message }));
       }
+    },
+  },
+  {
+    method: "GET",
+    path: buildRoutePath("/tasks"),
+    handler: (request, response) => {
+      const tasks = database.select("tasks");
+      response.writeHead(200).end(JSON.stringify(tasks));
     },
   },
 ];

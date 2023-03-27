@@ -9,4 +9,8 @@ export class Database {
     }
     return data;
   }
+
+  select(table) {
+    return this.#tables[table] ?? [];
+  }
 }
