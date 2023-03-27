@@ -1,11 +1,13 @@
 import { createServer } from "node:http";
 import { routes } from "./routes.js";
+import { json } from "./middlewares/json.js";
 
 const APP_PORT = 8080;
 const APP_BASE_URL = "http://localhost";
 
-const server = createServer((request, response) => {
+const server = createServer(async (request, response) => {
   const { method, url } = request;
+  await json(request, response);
   const route = routes.find((route) => {
     return route.method === method && route.path === url;
   });
