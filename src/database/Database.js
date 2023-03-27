@@ -21,4 +21,9 @@ export class Database {
     }
     return data;
   }
+
+  delete(table, id) {
+    const rowIndex = this.#tables[table].findIndex((row) => row.id === id);
+    if (rowIndex > -1) this.#tables[table].splice(rowIndex, 1);
+  }
 }

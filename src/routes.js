@@ -35,4 +35,15 @@ export const routes = [
       response.writeHead(200).end(JSON.stringify(tasks));
     },
   },
+  {
+    method: "DELETE",
+    path: buildRoutePath("/tasks/:id"),
+    handler: (request, response) => {
+      const { id } = request.params;
+      const [task] = database.select("tasks", { id });
+      if (!task) return response.writeHead(404).end();
+      database.delete("tasks", id);
+      response.writeHead(204).end();
+    },
+  },
 ];
