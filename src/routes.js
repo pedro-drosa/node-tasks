@@ -1,4 +1,6 @@
 import { ensureValidObject } from "./utils/ensureValidObject.js";
+import { randomUUID } from "node:crypto";
+import { Task } from "./entities/Task.js";
 
 export const routes = [
   {
@@ -9,7 +11,8 @@ export const routes = [
         const taskSchema = { title: "string", description: "string" };
         ensureValidObject(request.body, taskSchema);
         const { title, description } = request.body;
-        response.writeHead(201).end(JSON.stringify({ title, description }));
+        const task = new Task(randomUUID(), title, description);
+        response.writeHead(201).end(JSON.stringify(task));
       } catch (error) {
         response.writeHead(400).end(JSON.stringify({ error: error.message }));
       }
