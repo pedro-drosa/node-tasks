@@ -1,7 +1,8 @@
 export function ensureValidObject(body, schema) {
-  if (!body) throw new Error("Title and description are required");
+  const schemaKeys = Object.keys(schema);
   const bodyKeys = Object.keys(body);
-  for (const key of Object.keys(schema)) {
+  if (!bodyKeys.length) throw new Error(`${schemaKeys} are required`);
+  for (const key of schemaKeys) {
     if (!bodyKeys.includes(key)) {
       throw new Error(`Field '${key}' is required`);
     }
