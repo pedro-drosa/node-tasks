@@ -26,4 +26,9 @@ export class Database {
     const rowIndex = this.#tables[table].findIndex((row) => row.id === id);
     if (rowIndex > -1) this.#tables[table].splice(rowIndex, 1);
   }
+
+  update(table, id, data) {
+    const rowIndex = this.#tables[table].findIndex((row) => row.id === id);
+    this.#tables[table][rowIndex] = data;
+  }
 }
