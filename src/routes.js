@@ -40,6 +40,31 @@ export const routes = [
     },
   },
   {
+    method: "PUT",
+    path: buildRoutePath("/tasks/:id"),
+    handler: (request, response) => {
+      try {
+        const taskSchema = { title: "string", description: "string" };
+        ensureValidObject(request.body, taskSchema);
+        const { id } = request.params;
+        const { title, description } = request.body;
+        const [task] = database.select("tasks", { id });
+        if (!task) return response.writeHead(404).end();
+        const now = Date.now();
+        const updatedTask = {
+          ...task,
+          title: !title ? task.title : title,
+          description: !description ? task.description : description,
+          updated_at: new Date(now),
+        };
+        database.update("tasks", id, updatedTask);
+        response.writeHead(204).end();
+      } catch (error) {
+        response.writeHead(400).end(JSON.stringify({ error: error.message }));
+      }
+    },
+  },
+  {
     method: "DELETE",
     path: buildRoutePath("/tasks/:id"),
     handler: (request, response) => {
