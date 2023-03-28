@@ -1,7 +1,7 @@
 {
   "name": "tasks",
   "version": "1.0.0",
-  "description": "A simple API (no frameworks) to manage tasks (tasks)",
+  "description": "An API (no framework) to manage tasks",
   "main": "",
   "type": "module",
   "scripts": {
